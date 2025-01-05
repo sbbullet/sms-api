@@ -1,0 +1,56 @@
+services:
+    redis:
+        image: "redis:latest"
+        restart: always
+        ports:
+            - "6379:6379"
+        healthcheck:
+            test: ["CMD", "redis-cli", "--raw", "incr", "ping"]
+            interval: 10s
+            timeout: 5s
+            retries: 5
+
+    mongo:
+        image: "mongo:latest"
+        restart: always
+        ports:
+            - "27017:27017"
+        # We can set the root username and password here
+        # Not set here for immediately runing the project
+        # environment:
+        # MONGO_INITDB_ROOT_USERNAME: root
+        # MONGO_INITDB_ROOT_PASSWORD: example
+        healthcheck:
+            test: echo 'db.runCommand("ping").ok' | mongosh localhost:27017/test --quiet
+            interval: 10s
+            timeout: 5s
+            retries: 5
+
+    mongo-gui:
+        image: "mongo-express"
+        restart: always
+        ports:
+            - "8081:8081"
+        environment:
+            # ME_CONFIG_MONGODB_ADMINUSERNAME: root
+            # ME_CONFIG_MONGODB_ADMINPASSWORD: example
+            ME_CONFIG_MONGODB_URL: mongodb://mongo:27017/
+            ME_CONFIG_BASICAUTH: false
+        depends_on:
+            mongo:
+                condition: service_healthy
+
+    app:
+        build:
+            context: .
+            dockerfile: Dockerfile
+        restart: always
+        ports:
+            - "5111:5111"
+        env_file:
+            - .env
+        depends_on:
+            mongo:
+                condition: service_healthy
+            redis:
+                condition: service_healthy
