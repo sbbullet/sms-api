@@ -135,3 +135,7 @@ This will ensure all data and container-related resources are removed.
 ## **Database Design Diagram**
 
 ![alt text](https://raw.githubusercontent.com/sbbullet/sms-api/refs/heads/feature/sms-api/Database%20Design%20of%20SMS.png)
+
+## **Postman Documentation**
+
+[Click Here](https://documenter.getpostman.com/view/40795136/2sAYJ9AeAn)
