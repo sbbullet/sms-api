@@ -1,5 +1,5 @@
 // Boilerplate for E2E testing with in-memory MongoDB
-// Has running issue. Need to fix it.g
+// Has running issue. Need to fix it
 
 // const { MongoMemoryServer } = require("mongodb-memory-server");
 // const mongoose = require("mongoose");
