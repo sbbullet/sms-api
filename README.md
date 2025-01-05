@@ -134,4 +134,4 @@ This will ensure all data and container-related resources are removed.
 
 ## **Database Diagram**
 
-![Database Design Diagram]("./Database Design of SMS.png")
+![Database Design Diagram]("https://github.com/sbbullet/sms-api/blob/feature/sms-api/Database%20Design%20of%20SMS.png")
