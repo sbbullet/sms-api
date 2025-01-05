@@ -133,3 +133,5 @@ This will ensure all data and container-related resources are removed.
 ---
 
 ## **Database Diagram**
+
+("./Database Design of SMS.png")[Database Design Diagram]
