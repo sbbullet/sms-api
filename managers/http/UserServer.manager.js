@@ -81,4 +81,8 @@ module.exports = class UserServer {
             );
         });
     }
+
+    getApp() {
+        return app;
+    }
 };
