@@ -43,7 +43,7 @@ module.exports = class Classroom {
         const createdClassroom = await this.mongomodels.classroom.create(classroom);
 
         // Response
-        return createdClassroom;
+        return createdClassroom.toObject({ versionKey: false });
     }
 
     // This method is used to update a classroom record
@@ -77,9 +77,11 @@ module.exports = class Classroom {
             queryFilters["school"] = { $in: getSchoolsFromUserAccessLevel({ accessLevel: __school.accessLevel }) };
         }
 
-        const classroom = await this.mongomodels.classroom
-            .findOneAndUpdate(queryFilters, updateData, { new: true, runValidators: true })
-            .lean();
+        const classroom = await this.mongomodels.classroom.findOne(queryFilters);
+
+        // const classroom = await this.mongomodels.classroom
+        //     .findOneAndUpdate(queryFilters, updateData, { new: true, runValidators: true })
+        //     .lean();
 
         if (!classroom) {
             return {
@@ -88,7 +90,20 @@ module.exports = class Classroom {
             };
         }
 
-        return classroom;
+        if (capacity) {
+            const totalStudentsInClassroom = await this.mongomodels.student.countDocuments({ classroom: classroomId });
+            if (capacity < totalStudentsInClassroom) {
+                return {
+                    error: `Capacity update failed: Requested capacity (${capacity}) is less than the current number of students (${totalStudentsInClassroom})`,
+                    code: HTTPStatusCode.BAD_REQUEST,
+                };
+            }
+        }
+
+        // Update Logic
+        Object.assign(classroom, updateData);
+
+        return await classroom.save();
     }
 
     // This method is used to delete a classroom record
