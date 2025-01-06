@@ -46,5 +46,23 @@ describe("School Management System API Test", () => {
         it("should return status 422 when request body is empty", async () => {
             await supertest(app).post(firstSuperAdminCreateURL).expect(422);
         });
+
+        it("should return status 422 when request body has fields with no value", async () => {
+            await supertest(app).post(firstSuperAdminCreateURL).send({ email: "", password: "" }).expect(422);
+        });
+
+        it("should return status 422 when request body has required fields but are invalid", async () => {
+            await supertest(app)
+                .post(firstSuperAdminCreateURL)
+                .send({ email: "hello@gmail", password: "Passw0d" })
+                .expect(422);
+        });
+
+        it("should return status 200 when request body has valid fields", async () => {
+            await supertest(app)
+                .post(firstSuperAdminCreateURL)
+                .send({ email: "hello@gmail.com", password: "Passw0rd" })
+                .expect(200);
+        });
     });
 });
