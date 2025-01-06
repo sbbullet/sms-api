@@ -82,30 +82,33 @@ module.exports = class ApiHandler {
             }
         });
 
-        /** expose apis through cortex */
-        Object.keys(this.managers).forEach((mk) => {
-            if (this.managers[mk].interceptor) {
-                this.exposed[mk] = this.managers[mk];
-                // console.log(`## ${mk}`);
-                if (this.exposed[mk].cortexExposed) {
-                    this.exposed[mk].cortexExposed.forEach((i) => {
-                        // console.log(`* ${i} :`,getParamNames(this.exposed[mk][i]));
-                    });
-                }
-            }
-        });
+        // This code is commented as this feature has not yet been
+        // utilized in this project
 
-        /** expose apis through cortex */
-        this.cortex.sub("*", (d, meta, cb) => {
-            let [moduleName, fnName] = meta.event.split(".");
-            let targetModule = this.exposed[moduleName];
-            if (!targetModule) return cb({ error: `module ${moduleName} not found` });
-            try {
-                targetModule.interceptor({ data: d, meta, cb, fnName });
-            } catch (err) {
-                cb({ error: `failed to execute ${fnName}` });
-            }
-        });
+        // /** expose apis through cortex */
+        // Object.keys(this.managers).forEach((mk) => {
+        //     if (this.managers[mk].interceptor) {
+        //         this.exposed[mk] = this.managers[mk];
+        //         // console.log(`## ${mk}`);
+        //         if (this.exposed[mk].cortexExposed) {
+        //             this.exposed[mk].cortexExposed.forEach((i) => {
+        //                 // console.log(`* ${i} :`,getParamNames(this.exposed[mk][i]));
+        //             });
+        //         }
+        //     }
+        // });
+
+        // /** expose apis through cortex */
+        // this.cortex.sub("*", (d, meta, cb) => {
+        //     let [moduleName, fnName] = meta.event.split(".");
+        //     let targetModule = this.exposed[moduleName];
+        //     if (!targetModule) return cb({ error: `module ${moduleName} not found` });
+        //     try {
+        //         targetModule.interceptor({ data: d, meta, cb, fnName });
+        //     } catch (err) {
+        //         cb({ error: `failed to execute ${fnName}` });
+        //     }
+        // });
     }
 
     async _exec({ targetModule, fnName, cb, data }) {

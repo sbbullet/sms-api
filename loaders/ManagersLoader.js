@@ -1,6 +1,6 @@
 const MiddlewaresLoader = require("./MiddlewaresLoader");
 const ApiHandler = require("../managers/api/Api.manager");
-const LiveDB = require("../managers/live_db/LiveDb.manager");
+// const LiveDB = require("../managers/live_db/LiveDb.manager");
 const UserServer = require("../managers/http/UserServer.manager");
 const ResponseDispatcher = require("../managers/response_dispatcher/ResponseDispatcher.manager");
 const VirtualStack = require("../managers/virtual_stack/VirtualStack.manager");
@@ -8,10 +8,10 @@ const ValidatorsLoader = require("./ValidatorsLoader");
 const ResourceMeshLoader = require("./ResourceMeshLoader");
 const utils = require("../libs/utils");
 
-const systemArch = require("../static_arch/main.system");
+// const systemArch = require("../static_arch/main.system");
 const TokenManager = require("../managers/token/Token.manager");
 const SharkFin = require("../managers/shark_fin/SharkFin.manager");
-const TimeMachine = require("../managers/time_machine/TimeMachine.manager");
+// const TimeMachine = require("../managers/time_machine/TimeMachine.manager");
 
 const MongoLoader = require("./MongoLoader");
 const UserManager = require("../managers/entities/user/User.manager");
@@ -60,17 +60,19 @@ module.exports = class ManagersLoader {
 
     load() {
         this.managers.responseDispatcher = new ResponseDispatcher();
-        this.managers.liveDb = new LiveDB(this.injectable);
+        // unused manager
+        // this.managers.liveDb = new LiveDB(this.injectable);
 
         const middlewaresLoader = new MiddlewaresLoader(this.injectable);
         const mwsRepo = middlewaresLoader.load();
-        const { layers, actions } = systemArch;
+        // const { layers, actions } = systemArch;
 
         this.injectable.mwsRepo = mwsRepo;
 
         /*****************************************CUSTOM MANAGERS*****************************************/
-        this.managers.shark = new SharkFin({ ...this.injectable, layers, actions });
-        this.managers.timeMachine = new TimeMachine(this.injectable);
+        // commented the unused managers
+        // this.managers.shark = new SharkFin({ ...this.injectable, layers, actions });
+        // this.managers.timeMachine = new TimeMachine(this.injectable);
         this.managers.token = new TokenManager(this.injectable);
         /*************************************************************************************************/
 
