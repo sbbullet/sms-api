@@ -1,6 +1,6 @@
-const { paginate, flattenNestedObjectForUpdate } = require("../../_common/mongoose.helper");
+const { paginate } = require("../../_common/mongoose.helper");
 const { HTTPStatusCode } = require("../../../libs/constants");
-const { getSchoolsFromUserAccessLevel, isUserSuperAdmin, isUserSchoolAdmin } = require("../../_common/user.helper");
+const { getSchoolsFromUserAccessLevel, isUserSchoolAdmin } = require("../../_common/user.helper");
 const { filterEmptyFields } = require("../../../libs/utils");
 
 module.exports = class Student {
@@ -78,7 +78,7 @@ module.exports = class Student {
 
         student.school = dbClassroom.school;
         const createdstudent = await this.mongomodels.student.create(student);
-        return createdstudent;
+        return createdstudent.toObject({ versionKey: false });
     }
 
     // This method is used to update a student record

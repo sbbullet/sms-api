@@ -48,15 +48,8 @@ module.exports = class User {
         // Creation Logic
         const createdUser = await this.mongomodels.user.create(user);
 
-        const longToken = this.tokenManager.genLongToken({
-            userId: createdUser._id,
-            userKey: createdUser.accessLevel,
-        });
-
         // Response
-        return {
-            longToken,
-        };
+        return { ...createdUser.toObject({ versionKey: false }), password: undefined };
     }
 
     async deleteUser({ __longToken, __superAdmin, __params }) {

@@ -9,11 +9,13 @@ const classroomSchema = mongoose.Schema(
         },
         grade: {
             type: Number,
+            min: 1,
             required: true,
             trim: true,
         },
         capacity: {
             type: Number,
+            min: 1,
             required: true,
         },
         school: {

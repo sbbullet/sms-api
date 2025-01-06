@@ -26,7 +26,7 @@ module.exports = class School {
         const createdSchool = await this.mongomodels.school.create(school);
 
         // Response
-        return createdSchool;
+        return createdSchool.toObject({ versionKey: false });
     }
 
     // This method is used to update a school record
