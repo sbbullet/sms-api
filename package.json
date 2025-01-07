@@ -7,7 +7,7 @@
         "start:dev": "nodemon  -L app.js",
         "debug": "nodemon --signal SIGHUP --delay 1.5 --trace-warnings -L app.js",
         "start:prod": "NODE_ENV=production node app.js",
-        "test": "npx jest"
+        "test": "jest --detectOpenHandles --silent"
     },
     "author": "",
     "license": "ISC",

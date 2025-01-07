@@ -64,5 +64,12 @@ describe("School Management System API Test", () => {
                 .send({ email: "hello@gmail.com", password: "Passw0rd" })
                 .expect(200);
         });
+
+        it("should return status 409 if the first superadmin has already been created", async () => {
+            await supertest(app)
+                .post(firstSuperAdminCreateURL)
+                .send({ email: "hello@gmail.com", password: "Passw0rd" })
+                .expect(409);
+        });
     });
 });
