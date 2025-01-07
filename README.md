@@ -56,8 +56,9 @@ To start the application, follow the steps below:
 If you haven't already, clone the repository to your local machine:
 
 ```bash
-git clone
-cd
+git clone --branch feature/sms-api git@github.com:sbbullet/sms-api.git
+cd sms-api
+cp .env.example .env
 ```
 
 ### Step 2: Build and Start Containers
